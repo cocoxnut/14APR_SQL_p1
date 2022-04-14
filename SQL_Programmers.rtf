@@ -1,0 +1,177 @@
+{\rtf1\ansi\ansicpg1251\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red55\green239\blue32;\red57\green192\blue38;
+\red71\green112\blue255;\red59\green189\blue255;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c22319\c93015\c16433;\cssrgb\c25706\c77963\c19557;
+\cssrgb\c34508\c53655\c100000;\cssrgb\c27267\c78870\c100000;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \CocoaLigature0 CREATE DATABASE\
+tourist=# \\c Programmers\
+connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  database "Programmers" does not exist\
+Previous connection kept\
+tourist=# DROP DATABASE Programmers\
+tourist-# \\l\
+                            List of databases\
+    Name     |  Owner  | Encoding | Collate | Ctype |  Access privileges  \
+-------------+---------+----------+---------+-------+---------------------\
+ postgres    | yrysova | UTF8     | C       | C     | \
+ programmers | yrysova | UTF8     | C       | C     | \
+ template0   | yrysova | UTF8     | C       | C     | =c/yrysova         +\
+             |         |          |         |       | yrysova=CTc/yrysova\
+ template1   | yrysova | UTF8     | C       | C     | =c/yrysova         +\
+             |         |          |         |       | yrysova=CTc/yrysova\
+ tourist     | yrysova | UTF8     | C       | C     | \
+(5 rows)\
+\
+tourist-# \\c programmers\
+You are now connected to database "programmers" as user "yrysova".\
+programmers-# CREATE TABLE (id serial primary key, name varchar(255), age INTEGER, fp_language varchar(100), sp_language varchar(100);\
+programmers(# q\
+programmers(# ^C\
+programmers=# CREATE TABLE (id serial primary key, name varchar(255), age INTEGER, fp_language varchar(100), sp_language varchar(100));\
+ERROR:  syntax error at or near "("\
+LINE 1: CREATE TABLE (id serial primary key, name varchar(255), age ...\
+                     ^\
+programmers=# CREATE TABLE students (id serial primary key, name varchar(255), age INTEGER, fp_language varchar(100), sp_language varchar(100));\
+CREATE TABLE\
+programmers=# INSERT INTO students (name, age, fp_language, sp_language) VALUES ('Bakyt', 23, 'Python', 'C++');\
+INSERT 0 1\
+programmers=# INSERT INTO students (name, age, fp_language, sp_language) VALUES ('Aygul', 46, 'Python', 'Java');\
+INSERT 0 1\
+programmers=# INSERT INTO students (name, age, fp_language, sp_language) VALUES ('Jika', 13, 'C', 'Ruby_on_Rails');\
+INSERT 0 1\
+programmers=# INSERT INTO students (name, age, fp_language, sp_language) VALUES ('Ermek', 16, 'Java', 'C');\
+INSERT 0 1\
+programmers=# INSERT INTO students (name, age, fp_language, sp_language) VALUES ('Artem', 55, 'C#', 'Java');\
+INSERT 0 1\
+programmers=# INSERT INTO students (name, age, fp_language, sp_language) VALUES ('Roma', 31, 'Pascal', 'C');\
+INSERT 0 1\
+programmers=# INSERT INTO students (name, age, fp_language, sp_language) VALUES ('Beka', 25, 'C#', 'Javascript');\
+INSERT 0 1\
+programmers=# SELECT name, fp_language, sp_language FROM students;\
+ name  | fp_language |  sp_language  \
+-------+-------------+---------------\
+ Bakyt | Python      | C++\
+ Aygul | Python      | Java\
+ Jika  | C           | Ruby_on_Rails\
+ Ermek | Java        | C\
+ Artem | C#          | Java\
+ Roma  | Pascal      | C\
+ Beka  | C#          | Javascript\
+(7 rows)\
+\
+programmers=# SELECT * from students WHERE age > 30;\
+ id | name  | age | fp_language | sp_language \
+----+-------+-----+-------------+-------------\
+  2 | Aygul |  46 | Python      | Java\
+  5 | Artem |  55 | C#          | Java\
+  6 | Roma  |  31 | Pascal      | C\
+(3 rows)\
+\
+programmers=# SELECT * from students WHERE fp_language = 'Python' AND sp_language = 'C#';\
+ id | name | age | fp_language | sp_language \
+----+------+-----+-------------+-------------\
+(0 rows)\
+\
+programmers=# SELECT * from students WHERE fp_language = 'Python' OR sp_language = 'C#';\
+ id | name  | age | fp_language | sp_language \
+----+-------+-----+-------------+-------------\
+  1 | Bakyt |  23 | Python      | C++\
+  2 | Aygul |  46 | Python      | Java\
+(2 rows)\
+\
+programmers=# SELECT * from students WHERE fp_language = 'Python' OR fp_language = 'C#';\
+ id | name  | age | fp_language | sp_language \
+----+-------+-----+-------------+-------------\
+  1 | Bakyt |  23 | Python      | C++\
+  2 | Aygul |  46 | Python      | Java\
+  5 | Artem |  55 | C#          | Java\
+  7 | Beka  |  25 | C#          | Javascript\
+(4 rows)\
+\
+programmers=# SELECT * from students WHERE fp_language = 'Python' OR fp_language = 'C#' AND sp_language = 'C#' OR sp_language = 'Java';\
+ id | name  | age | fp_language | sp_language \
+----+-------+-----+-------------+-------------\
+  1 | Bakyt |  23 | Python      | C++\
+  2 | Aygul |  46 | Python      | Java\
+  5 | Artem |  55 | C#          | Java\
+(3 rows)\
+\
+programmers=# DELETE from students WHERE id = 1 AND id = 3 AND id = 5 AND id = 7;\
+DELETE 0\
+programmers=# SELECT * from students;\
+ id | name  | age | fp_language |  sp_language  \
+----+-------+-----+-------------+---------------\
+  1 | Bakyt |  23 | Python      | C++\
+  2 | Aygul |  46 | Python      | Java\
+  3 | Jika  |  13 | C           | Ruby_on_Rails\
+  4 | Ermek |  16 | Java        | C\
+  5 | Artem |  55 | C#          | Java\
+  6 | Roma  |  31 | Pascal      | C\
+  7 | Beka  |  25 | C#          | Javascript\
+(7 rows)\
+\
+programmers=# DELETE from students WHERE id = 1 OR id = 3 OR id = 5 OR id = 7;\
+DELETE 4\
+programmers=# SELECT * from students WHERE age < 25 AND fp_language = 'Java' OR sp_language = 'Java';\
+ id | name  | age | fp_language | sp_language \
+----+-------+-----+-------------+-------------\
+  2 | Aygul |  46 | Python      | Java\
+  4 | Ermek |  16 | Java        | C\
+(2 rows)\
+\
+programmers=# SELECT * from students WHERE age < 25 OR fp_language = 'Java' OR sp_language = 'Java';\
+ id | name  | age | fp_language | sp_language \
+----+-------+-----+-------------+-------------\
+  2 | Aygul |  46 | Python      | Java\
+  4 | Ermek |  16 | Java        | C\
+(2 rows)\
+\
+programmers=# SELECT * from students WHERE age < 25 and fp_language = 'Java' ;\
+ id | name  | age | fp_language | sp_language \
+----+-------+-----+-------------+-------------\
+  4 | Ermek |  16 | Java        | C\
+(1 row)\
+\
+programmers=# DROP TABLE students\
+programmers-# DROP TABLE students;\
+ERROR:  syntax error at or near "DROP"\
+LINE 2: DROP TABLE students;\
+        ^\
+programmers=# ;\
+programmers=# DROP TABLE students;\
+DROP TABLE\
+programmers=# DROP TABLE students\
+programmers-# hdhfdhgfd\
+programmers-# fhdfdh\
+programmers-# ;\
+ERROR:  syntax error at or near "hdhfdhgfd"\
+LINE 2: hdhfdhgfd\
+        ^\
+programmers=# DROP DATABASE programmers;\
+ERROR:  cannot drop the currently open database\
+programmers=# \\q\
+\cf3 yrysova\cf2 @MacBook-Pro-Asel \cf4 ~\cf2 > \cf5 psql\cf2  \cf6 postgres\cf2                                                                              
+\f1\b \cf4 (base) 
+\f0\b0 \cf2 \
+psql (14.2)\
+Type "help" for help.\
+\
+postgres=# \\l\
+                            List of databases\
+    Name     |  Owner  | Encoding | Collate | Ctype |  Access privileges  \
+-------------+---------+----------+---------+-------+---------------------\
+ postgres    | yrysova | UTF8     | C       | C     | \
+ programmers | yrysova | UTF8     | C       | C     | \
+ template0   | yrysova | UTF8     | C       | C     | =c/yrysova         +\
+             |         |          |         |       | yrysova=CTc/yrysova\
+ template1   | yrysova | UTF8     | C       | C     | =c/yrysova         +\
+             |         |          |         |       | yrysova=CTc/yrysova\
+ tourist     | yrysova | UTF8     | C       | C     | \
+(5 rows)\
+\
+postgres=# DROP DATABASE programmers;\
+DROP DATABASE\
+postgres=# }
